@@ -27,7 +27,7 @@ public class Product {
     @Column(name = "VALUE_PRODUCT", nullable = false)
     private BigDecimal value;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RawMaterialProduct> rawMaterialProduct;
 
     public Product(RegisterProductDto productDto) {

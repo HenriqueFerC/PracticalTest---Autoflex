@@ -28,7 +28,7 @@ public class RawMaterial {
     @Column(name = "STOCK_RAW_MATERIAL", nullable = false)
     private Integer stock;
 
-    @OneToMany(mappedBy = "rawMaterial")
+    @OneToMany(mappedBy = "rawMaterial", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RawMaterialProduct> rawMaterialProduct;
 
     public RawMaterial(RegisterRawMaterialDto rawMaterialDto) {
