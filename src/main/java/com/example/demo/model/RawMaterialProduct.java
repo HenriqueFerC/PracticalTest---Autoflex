@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.example.demo.dto.RawMaterialProduct.RegisterRawMaterialProductDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -28,4 +29,9 @@ public class RawMaterialProduct {
     @Column(name = "RAW_MATERIAL_QUANTITY", nullable = false)
     private Integer quantity;
 
+    public RawMaterialProduct(RegisterRawMaterialProductDto rawMaterialProductDto, Product product, RawMaterial rawMaterial) {
+        quantity = rawMaterialProductDto.quantity();
+        this.rawMaterial = rawMaterial;
+        this.product = product;
+    }
 }
