@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.example.demo.dto.RawMaterialDto.RegisterRawMaterialDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,4 +31,8 @@ public class RawMaterial {
     @ManyToMany(mappedBy = "rawMaterialList")
     private List<Product> productsList;
 
+    public RawMaterial(RegisterRawMaterialDto rawMaterialDto) {
+        name = rawMaterialDto.name();
+        stock = rawMaterialDto.stock();
+    }
 }

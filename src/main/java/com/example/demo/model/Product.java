@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.example.demo.dto.ProductDto.RegisterProductDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,5 +31,10 @@ public class Product {
     @JoinTable(name = "TB_RAW_MATERIAL_PRODUCT", joinColumns = @JoinColumn(name = "ID_RAW_MATERIAL"),
             inverseJoinColumns = @JoinColumn(name = "ID_PRODUCT"))
     private List<RawMaterial> rawMaterialList;
+
+    public Product(RegisterProductDto productDto) {
+        name = productDto.name();
+        value = productDto.value();
+    }
 
 }
