@@ -4,12 +4,14 @@ import com.example.demo.dto.RawMaterialProduct.RegisterRawMaterialProductDto;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
-@Table(name = "RAW_MATERIAL_PRODUCT")
+@Table(name = "TB_RAW_MATERIAL_PRODUCT")
 public class RawMaterialProduct {
 
     @Id

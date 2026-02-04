@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Raw_Material")
+@Table(name = "TB_RAW_MATERIAL")
 public class RawMaterial {
 
     @Id
