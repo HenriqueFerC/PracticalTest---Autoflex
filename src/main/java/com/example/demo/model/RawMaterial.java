@@ -28,8 +28,8 @@ public class RawMaterial {
     @Column(name = "STOCK_RAW_MATERIAL", nullable = false)
     private Integer stock;
 
-    @ManyToMany(mappedBy = "rawMaterialList")
-    private List<Product> productsList;
+    @OneToMany(mappedBy = "rawMaterial")
+    private List<RawMaterialProduct> rawMaterialProduct;
 
     public RawMaterial(RegisterRawMaterialDto rawMaterialDto) {
         name = rawMaterialDto.name();

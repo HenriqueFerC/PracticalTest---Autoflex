@@ -27,14 +27,17 @@ public class Product {
     @Column(name = "VALUE_PRODUCT", nullable = false)
     private BigDecimal value;
 
-    @ManyToMany
-    @JoinTable(name = "TB_RAW_MATERIAL_PRODUCT", joinColumns = @JoinColumn(name = "ID_RAW_MATERIAL"),
-            inverseJoinColumns = @JoinColumn(name = "ID_PRODUCT"))
-    private List<RawMaterial> rawMaterialList;
+    @OneToMany(mappedBy = "product")
+    private List<RawMaterialProduct> rawMaterialProduct;
 
     public Product(RegisterProductDto productDto) {
         name = productDto.name();
         value = productDto.value();
     }
 
+    public void updateProduct(String name, BigDecimal value, Integer id) {
+        this.id = id;
+        this.name = name;
+        this.value = value;
+    }
 }
