@@ -35,4 +35,10 @@ public class RawMaterial {
         name = rawMaterialDto.name();
         stock = rawMaterialDto.stock();
     }
+
+    public void updateRawMaterial(String name, Integer stock, Integer id) {
+        this.name = name;
+        this.stock = stock;
+        this.id = id;
+    }
 }

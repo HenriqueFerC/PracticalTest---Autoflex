@@ -44,6 +44,9 @@ public class ProductController {
     @GetMapping("listProducts")
     public ResponseEntity<List<DetailsProductDto>> lisDetailsProduct(Pageable pageable) {
         var list = productRepository.findAll(pageable).stream().map(DetailsProductDto::new).toList();
+        if(list.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(list);
     }
 
