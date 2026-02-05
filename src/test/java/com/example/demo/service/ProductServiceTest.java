@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.ProductDto.DetailsProductDto;
 import com.example.demo.dto.ProductDto.RegisterProductDto;
+import com.example.demo.dto.ProductDto.UpdateProductDto;
 import com.example.demo.model.Product;
 import com.example.demo.repository.ProductRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -71,5 +72,33 @@ public class ProductServiceTest {
         ResponseStatusException e = assertThrows(ResponseStatusException.class, () -> productService.findById(id));
         assertThat(e.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
         assertThat(e.getReason()).isEqualTo("ID Product Not Found!");
+    }
+
+    @Test
+    @DisplayName("Should must be a update Product successfully")
+    void updateProductCase1() {
+        int id = 1;
+        UpdateProductDto productUpdated = new UpdateProductDto("Mesa", BigDecimal.valueOf(2000));
+        Product productMock = new Product(1, "Mesa", BigDecimal.valueOf(2000), null);
+
+        when(productRepository.save(any(Product.class))).thenReturn(productMock);
+        when(productRepository.findById(id)).thenReturn(Optional.of(productMock));
+        DetailsProductDto detailsProductDto = productService.updateProduct(1, productUpdated);
+
+        assertThat(detailsProductDto.name()).isEqualTo("Mesa");
+        assertEquals(detailsProductDto.value(), BigDecimal.valueOf(2000));
+    }
+
+    @Test
+    @DisplayName("Should not must be a update Product: ID Not Found")
+    void updateProductCase2() {
+        int id = 2;
+        UpdateProductDto productUpdated = new UpdateProductDto("Mesa", BigDecimal.valueOf(2000));
+
+        when(productRepository.findById(id)).thenReturn(Optional.empty());
+
+        ResponseStatusException e = assertThrows(ResponseStatusException.class, () -> productService.updateProduct(id, productUpdated));
+        assertThat(e.getReason()).isEqualTo( "ID Product Not Found!");
+        assertThat(e.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 }
