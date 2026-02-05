@@ -28,11 +28,11 @@ public class RawMaterialProduct {
     @JoinColumn(name = "ID_RAW_MATERIAL")
     private RawMaterial rawMaterial;
 
-    @Column(name = "RAW_MATERIAL_QUANTITY", nullable = false)
-    private Integer quantity;
+    @Column(name = "RAW_MATERIAL_QUANTITY_TO_BUILD", nullable = false)
+    private Integer quantityToOneProduct;
 
     public RawMaterialProduct(RegisterRawMaterialProductDto rawMaterialProductDto, Product product, RawMaterial rawMaterial) {
-        quantity = rawMaterialProductDto.quantity();
+        quantityToOneProduct = rawMaterialProductDto.quantity();
         this.rawMaterial = rawMaterial;
         this.product = product;
     }

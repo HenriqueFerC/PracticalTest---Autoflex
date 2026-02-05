@@ -5,7 +5,6 @@ import com.example.demo.dto.ProductDto.RegisterProductDto;
 import com.example.demo.dto.ProductDto.UpdateProductDto;
 import com.example.demo.model.Product;
 import com.example.demo.repository.ProductRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
