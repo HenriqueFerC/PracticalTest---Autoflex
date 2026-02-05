@@ -1,0 +1,75 @@
+package com.example.demo.service;
+
+import com.example.demo.dto.ProductDto.DetailsProductDto;
+import com.example.demo.dto.ProductDto.RegisterProductDto;
+import com.example.demo.model.Product;
+import com.example.demo.repository.ProductRepository;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.math.BigDecimal;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.as;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+public class ProductServiceTest {
+
+    @Mock
+    private ProductRepository productRepository;
+
+    @InjectMocks
+    private ProductService productService;
+
+    @Test
+    @DisplayName("Should create Product")
+    void createProductCase() {
+        RegisterProductDto productDto = new RegisterProductDto("Cadeira", BigDecimal.valueOf(1000));
+        Product productMock = new Product(1, "Cadeira", BigDecimal.valueOf(1000), null);
+
+        when(productRepository.save(any(Product.class))).thenReturn(productMock);
+        Product product = productService.saveProduct(productDto);
+
+        assertThat(product).isNotNull();
+        assertThat(product.getName()).isEqualTo("Cadeira");
+        assertEquals(product.getValue() ,BigDecimal.valueOf(1000));
+    }
+
+    @Test
+    @DisplayName("Should find Product by ID")
+    void findProductByIdCase1() {
+        int id = 1;
+        Product productMock = new Product(1, "Cadeira", BigDecimal.valueOf(1000), null);
+        when(productRepository.findById(id)).thenReturn(Optional.of(productMock));
+
+
+        DetailsProductDto productFounded = productService.findById(id);
+
+
+        assertThat(productFounded.name()).isEqualTo("Cadeira");
+        assertEquals(productFounded.value(), BigDecimal.valueOf(1000));
+    }
+
+    @Test
+    @DisplayName("Should not find Product by ID: NOT FOUND")
+    void findProductByIdCase2() {
+        int id = 2;
+        when(productRepository.findById(id)).thenReturn(Optional.empty());
+
+        ResponseStatusException e = assertThrows(ResponseStatusException.class, () -> productService.findById(id));
+        assertThat(e.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        assertThat(e.getReason()).isEqualTo("ID Product Not Found!");
+    }
+}
