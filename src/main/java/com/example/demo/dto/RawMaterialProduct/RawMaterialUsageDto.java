@@ -1,4 +1,4 @@
-package com.example.demo.dto.RawMaterialDto;
+package com.example.demo.dto.RawMaterialProduct;
 
 import java.math.BigDecimal;
 

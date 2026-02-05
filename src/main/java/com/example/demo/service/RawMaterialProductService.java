@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.RawMaterialDto.RawMaterialUsageDto;
+import com.example.demo.dto.RawMaterialDto.DetailsRawMaterialDto;
+import com.example.demo.dto.RawMaterialProduct.RawMaterialNecessaryToProduct;
+import com.example.demo.dto.RawMaterialProduct.RawMaterialUsageDto;
 import com.example.demo.dto.RawMaterialProduct.RegisterRawMaterialProductDto;
 import com.example.demo.model.RawMaterialProduct;
 import com.example.demo.repository.ProductRepository;
@@ -39,7 +41,8 @@ public class RawMaterialProductService {
 
 
     public Page<RawMaterialUsageDto> findByRawMaterial(Integer id, Pageable pageable) {
-        var rawMaterial = rawMaterialRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Raw Material Not Found!"));
+        var rawMaterial = rawMaterialRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Raw Material Not Found!"));
         return rawMaterialProductRepository.findByRawMaterial(rawMaterial, pageable)
                 .map(rawMaterialProduct -> {
                     int possibleProducts = rawMaterial.getStock() / rawMaterialProduct.getQuantityToOneProduct();
@@ -56,4 +59,16 @@ public class RawMaterialProductService {
                 });
     }
 
+    public Page<RawMaterialNecessaryToProduct> findByProduct(Integer id, Pageable pageable) {
+        var product = productRepository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Product Not Found!"));
+        return rawMaterialProductRepository.findByProduct(product, pageable)
+                .map(rawMaterialProduct -> {
+                    return new RawMaterialNecessaryToProduct(
+                            product.getName(),
+                            rawMaterialProduct.getRawMaterial().getName(),
+                            rawMaterialProduct.getQuantityToOneProduct()
+                    );
+                });
+    }
 }

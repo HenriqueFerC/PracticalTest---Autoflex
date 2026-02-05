@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.RawMaterialDto.RawMaterialUsageDto;
+import com.example.demo.dto.RawMaterialProduct.RawMaterialNecessaryToProduct;
+import com.example.demo.dto.RawMaterialProduct.RawMaterialUsageDto;
 import com.example.demo.dto.RawMaterialProduct.DetailsRawMaterialProductDto;
 import com.example.demo.dto.RawMaterialProduct.RegisterRawMaterialProductDto;
 import com.example.demo.service.RawMaterialProductService;
@@ -36,8 +37,22 @@ public class RawMaterialProductController {
     }
 
     @GetMapping("productsAvailable/{idRawMaterial}")
-    public ResponseEntity<Page<RawMaterialUsageDto>> listProductsAvailableAndTotalValue(@PathVariable("idRawMaterial") int id, Pageable pageable) {
+    public ResponseEntity<Page<RawMaterialUsageDto>> listProductsAvailableAndTotalValue(
+            @PathVariable("idRawMaterial") int id, Pageable pageable) {
         var list = rawMaterialProductService.findByRawMaterial(id, pageable);
+        if(list.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("necessaryRawMaterial/{idProduct}")
+    public ResponseEntity<Page<RawMaterialNecessaryToProduct>> listRawMaterialNecessaryToProduct(
+            @PathVariable("idProduct") int id, Pageable pageable) {
+        var list = rawMaterialProductService.findByProduct(id, pageable);
+        if(list.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(list);
     }
 }
