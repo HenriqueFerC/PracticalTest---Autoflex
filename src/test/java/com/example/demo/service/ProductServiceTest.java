@@ -20,9 +20,9 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -35,7 +35,7 @@ public class ProductServiceTest {
     private ProductService productService;
 
     @Test
-    @DisplayName("Should create Product")
+    @DisplayName("Should must be create Product with successfully")
     void createProductCase() {
         RegisterProductDto productDto = new RegisterProductDto("Cadeira", BigDecimal.valueOf(1000));
         Product productMock = new Product(1, "Cadeira", BigDecimal.valueOf(1000), null);
@@ -49,7 +49,7 @@ public class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("Should find Product by ID")
+    @DisplayName("Should must be find Product by ID with successfully")
     void findProductByIdCase1() {
         int id = 1;
         Product productMock = new Product(1, "Cadeira", BigDecimal.valueOf(1000), null);
@@ -99,6 +99,25 @@ public class ProductServiceTest {
 
         ResponseStatusException e = assertThrows(ResponseStatusException.class, () -> productService.updateProduct(id, productUpdated));
         assertThat(e.getReason()).isEqualTo( "ID Product Not Found!");
+        assertThat(e.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    @DisplayName("Should must be delete Product with sucessfully")
+    void deleteProductCase1() {
+        Product productMock = new Product(1, "Mesa", BigDecimal.valueOf(2000), null);
+
+        doNothing().when(productRepository).deleteById(1);
+        when(productRepository.findById(1)).thenReturn(Optional.of(productMock));
+
+        assertDoesNotThrow(() -> productService.deleteById(1));
+    }
+
+    @Test
+    @DisplayName("Should not must be delete Product: ID Not Found")
+    void deleteProductCase2() {
+        ResponseStatusException e = assertThrows(ResponseStatusException.class, () -> productService.deleteById(1));
+        assertThat(e.getReason()).isEqualTo("ID Product Not Found!");
         assertThat(e.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 }
