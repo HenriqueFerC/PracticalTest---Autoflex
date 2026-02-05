@@ -7,6 +7,7 @@ import com.example.demo.service.ProductService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -24,7 +25,7 @@ public class ProductController {
 
     @PostMapping("register")
     @Transactional
-    public ResponseEntity<DetailsProductDto> registerProduct(@RequestBody RegisterProductDto productDto, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<DetailsProductDto> registerProduct(@RequestBody @Validated RegisterProductDto productDto, UriComponentsBuilder uriBuilder) {
         var saved = productService.saveProduct(productDto);
         var uri = uriBuilder.path("product/{id}").buildAndExpand(saved.getId()).toUri();
         return ResponseEntity.created(uri).body(new DetailsProductDto(saved));
@@ -46,7 +47,7 @@ public class ProductController {
 
     @PutMapping("updateProduct/{id}")
     @Transactional
-    public ResponseEntity<DetailsProductDto> updateProduct(@PathVariable("id") Integer id, @RequestBody UpdateProductDto productDto) {
+    public ResponseEntity<DetailsProductDto> updateProduct(@PathVariable("id") Integer id, @RequestBody @Validated UpdateProductDto productDto) {
         return ResponseEntity.ok().body(productService.updateProduct(id, productDto));
     }
 

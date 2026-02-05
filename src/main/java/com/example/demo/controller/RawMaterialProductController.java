@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -29,7 +30,7 @@ public class RawMaterialProductController {
     public ResponseEntity<DetailsRawMaterialProductDto> registerRelationProductToRawMaterial
             (@PathVariable("idProduct") int idProduct,
              @PathVariable("idRawMaterial") int idRawMaterial,
-             @RequestBody RegisterRawMaterialProductDto rawMaterialProductDto,
+             @RequestBody @Validated RegisterRawMaterialProductDto rawMaterialProductDto,
              UriComponentsBuilder uriBuilder) {
         var saved = rawMaterialProductService.save(idProduct, idRawMaterial, rawMaterialProductDto);
         var uri = uriBuilder.path("rawMaterialProduct/{id}").buildAndExpand(saved.getId()).toUri();

@@ -7,6 +7,7 @@ import com.example.demo.service.RawMaterialService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -24,7 +25,7 @@ public class RawMaterialController {
 
     @PostMapping("register")
     @Transactional
-    public ResponseEntity<DetailsRawMaterialDto> registerRawMaterial(@RequestBody RegisterRawMaterialDto rawMaterialDto,
+    public ResponseEntity<DetailsRawMaterialDto> registerRawMaterial(@RequestBody @Validated RegisterRawMaterialDto rawMaterialDto,
                                                                      UriComponentsBuilder uriBuilder) {
         var saved = rawMaterialService.saveRawMaterial(rawMaterialDto);
         var uri = uriBuilder.path("rawMaterial/{id}").buildAndExpand(saved.getId()).toUri();
@@ -48,7 +49,7 @@ public class RawMaterialController {
     @PutMapping("updateRawMaterial/{id}")
     @Transactional
     public ResponseEntity<DetailsRawMaterialDto> updateRawMaterial(@PathVariable("id") Integer id,
-                                                                   @RequestBody UpdateRawMaterialDto rawMaterialDto) {
+                                                                   @RequestBody @Validated UpdateRawMaterialDto rawMaterialDto) {
         return ResponseEntity.ok().body(rawMaterialService.updateRawMaterial(id, rawMaterialDto));
     }
 
