@@ -18,9 +18,9 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -80,5 +80,39 @@ public class RawMaterialServiceTest {
 
         assertThat(rawMaterialUpdated.name()).isEqualTo("Ferro");
         assertEquals(400, rawMaterialUpdated.stock());
+    }
+
+    @Test
+    @DisplayName("Should not must be update Raw Material: ID Not Found")
+    void updateRawMaterialCase2() {
+        UpdateRawMaterialDto rawMaterialDto = new UpdateRawMaterialDto("Ferro", 400);
+
+        when(rawMaterialRepository.findById(1)).thenReturn(Optional.empty());
+
+
+        ResponseStatusException e = assertThrows(ResponseStatusException.class, () -> rawMaterialService.updateRawMaterial(1, rawMaterialDto));
+        assertThat(e.getReason()).isEqualTo("ID Raw Material Not Found!");
+        assertThat(e.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    @DisplayName("Should must be delete Raw Material by ID")
+    void deleteRawMaterialByIdCase1() {
+        RawMaterial rawMaterialMock = new RawMaterial(1, "Ferro", 400, null);
+
+        doNothing().when(rawMaterialRepository).deleteById(1);
+        when(rawMaterialRepository.findById(1)).thenReturn(Optional.of(rawMaterialMock));
+
+        assertDoesNotThrow(() -> rawMaterialService.deleteById(1));
+    }
+
+    @Test
+    @DisplayName("Should not must be delete Raw Material by ID: ID Not Found")
+    void deleteRawMaterialByIdCase2() {
+        when(rawMaterialRepository.findById(1)).thenReturn(Optional.empty());
+
+        ResponseStatusException e = assertThrows(ResponseStatusException.class, () -> rawMaterialService.deleteById(1));
+        assertThat(e.getReason()).isEqualTo("ID Raw Material Not Found!");
+        assertThat(e.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 }
