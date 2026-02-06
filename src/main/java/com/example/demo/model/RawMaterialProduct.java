@@ -2,14 +2,12 @@ package com.example.demo.model;
 
 import com.example.demo.dto.RawMaterialProduct.RegisterRawMaterialProductDto;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "TB_RAW_MATERIAL_PRODUCT")
 public class RawMaterialProduct {
