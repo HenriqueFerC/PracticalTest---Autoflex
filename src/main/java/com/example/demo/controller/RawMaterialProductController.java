@@ -13,6 +13,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("rawMaterialProduct")
@@ -38,7 +40,7 @@ public class RawMaterialProductController {
     }
 
     @GetMapping("productsAvailable/{idRawMaterial}")
-    public ResponseEntity<Page<RawMaterialUsageDto>> listProductsAvailableAndTotalValue(
+    public ResponseEntity<List<RawMaterialUsageDto>> listProductsAvailableAndTotalValue(
             @PathVariable("idRawMaterial") int id, Pageable pageable) {
         var list = rawMaterialProductService.findByRawMaterial(id, pageable);
         if(list.isEmpty()) {

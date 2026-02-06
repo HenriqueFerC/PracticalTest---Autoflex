@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.RawMaterialDto.DetailsRawMaterialDto;
 import com.example.demo.dto.RawMaterialProduct.RawMaterialNecessaryToProduct;
 import com.example.demo.dto.RawMaterialProduct.RawMaterialUsageDto;
 import com.example.demo.dto.RawMaterialProduct.RegisterRawMaterialProductDto;
@@ -15,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
+import java.util.List;
 
 @Service
 public class RawMaterialProductService {
@@ -40,7 +41,7 @@ public class RawMaterialProductService {
     }
 
 
-    public Page<RawMaterialUsageDto> findByRawMaterial(Integer id, Pageable pageable) {
+    public List<RawMaterialUsageDto> findByRawMaterial(Integer id, Pageable pageable) {
         var rawMaterial = rawMaterialRepository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Raw Material Not Found!"));
         return rawMaterialProductRepository.findByRawMaterial(rawMaterial, pageable)
@@ -56,7 +57,7 @@ public class RawMaterialProductService {
                             possibleProducts,
                             totalValue
                     );
-                });
+                }).stream().sorted(Comparator.comparing(RawMaterialUsageDto::totalValue).reversed()).toList();
     }
 
     public Page<RawMaterialNecessaryToProduct> findByProduct(Integer id, Pageable pageable) {

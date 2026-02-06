@@ -13,12 +13,15 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -56,4 +59,31 @@ public class RawMaterialProductServiceTest {
         assertThat(rawMaterialProductCreated.getProduct()).isEqualTo(productMock);
     }
 
+    @Test
+    @DisplayName("Should not must be create Raw Material - Product: ID Product Not Found")
+    void createRawMaterialProductCase2() {
+        RegisterRawMaterialProductDto rawMaterialProductDto = new RegisterRawMaterialProductDto(4);
+
+        when(productRepository.findById(1)).thenReturn(Optional.empty());
+
+        ResponseStatusException e = assertThrows(ResponseStatusException.class,
+                () -> rawMaterialProductService.save(1, 1, rawMaterialProductDto));
+        assertThat(e.getReason()).isEqualTo("ID Product Not Found!");
+        assertThat(e.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    @DisplayName("Should not must be create Raw Material - Product: ID Raw Material Not Found")
+    void createRawMaterialProductCase3() {
+        Product productMock = new Product(1, "Cadeira", BigDecimal.valueOf(1000), null);
+        RegisterRawMaterialProductDto rawMaterialProductDto = new RegisterRawMaterialProductDto(4);
+
+        when(productRepository.findById(1)).thenReturn(Optional.of(productMock));
+        when(rawMaterialRepository.findById(1)).thenReturn(Optional.empty());
+
+        ResponseStatusException e = assertThrows(ResponseStatusException.class,
+                () -> rawMaterialProductService.save(1, 1, rawMaterialProductDto));
+        assertThat(e.getReason()).isEqualTo("ID Raw Material Not Found!");
+        assertThat(e.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
 }
