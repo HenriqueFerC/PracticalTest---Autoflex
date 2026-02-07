@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.RawMaterialProduct.DetailsRawMaterialProductDto;
 import com.example.demo.dto.RawMaterialProduct.RawMaterialNecessaryToProduct;
 import com.example.demo.dto.RawMaterialProduct.RawMaterialUsageDto;
-import com.example.demo.dto.RawMaterialProduct.DetailsRawMaterialProductDto;
 import com.example.demo.dto.RawMaterialProduct.RegisterRawMaterialProductDto;
 import com.example.demo.service.RawMaterialProductService;
 import org.springframework.data.domain.Page;
@@ -43,7 +43,7 @@ public class RawMaterialProductController {
     public ResponseEntity<List<RawMaterialUsageDto>> listProductsAvailableAndTotalValue(
             @PathVariable("idRawMaterial") int id, Pageable pageable) {
         var list = rawMaterialProductService.findByRawMaterial(id, pageable);
-        if(list.isEmpty()) {
+        if (list.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(list);
@@ -53,7 +53,7 @@ public class RawMaterialProductController {
     public ResponseEntity<Page<RawMaterialNecessaryToProduct>> listRawMaterialNecessaryToProduct(
             @PathVariable("idProduct") int id, Pageable pageable) {
         var list = rawMaterialProductService.findByProduct(id, pageable);
-        if(list.isEmpty()) {
+        if (list.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(list);
