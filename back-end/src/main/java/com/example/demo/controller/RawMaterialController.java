@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("rawMaterial")
+@Tag(name = "Raw Material Controller", description = "API of Raw Material Class, should register a new raw material in the database," +
+        "search by ID, update by ID, delete by ID and list registered raw materials.")
 public class RawMaterialController {
 
     private final RawMaterialService rawMaterialService;

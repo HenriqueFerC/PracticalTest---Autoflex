@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("product")
+@Tag(name = "Product Controller", description = "API of Product Class, should register a new product in the database," +
+        " update by ID, search by ID, delete by ID and list registered products")
 public class ProductController {
 
     private final ProductService productService;
