@@ -16,12 +16,12 @@ Funcionalidades:
 - Cadastro de produtos
 - Listagem de produtos
 - Procura dos detalhes do produto por ID
-- Atualização de produtos
+- Atualização de produtos por ID
 - Remoção de produtos por ID
 - Cadastro de matérias primas
 - Listagem de matérias primas
 - Procura dos detalhes da matéria prima por ID
-- Atualização de matérias primas
+- Atualização de matérias primas por ID
 - Remoção de matérias primas por ID
 - Cadastro de relacionamento entre produtos e matérias primas e registro de quantidade necessária para fazer o produto
 - Listagem de produtos feitos por uma matéria prima específica
