@@ -20,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("product")
 @Tag(name = "Product Controller", description = "API of Product Class, should register a new product in the database," +
         " update by ID, search by ID, delete by ID and list registered products")

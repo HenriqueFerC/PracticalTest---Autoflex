@@ -20,6 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("rawMaterial")
 @Tag(name = "Raw Material Controller", description = "API of Raw Material Class, should register a new raw material in the database," +
         "search by ID, update by ID, delete by ID and list registered raw materials.")

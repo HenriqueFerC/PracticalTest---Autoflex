@@ -22,7 +22,7 @@ public class RawMaterial {
     @Column(name = "ID_RAW_MATERIAL")
     private Integer id;
 
-    @Column(name = "NAME_RAW_MATERIAL", nullable = false, length = 30)
+    @Column(name = "NAME_RAW_MATERIAL", nullable = false, length = 30, unique = true)
     private String name;
 
     @Column(name = "STOCK_RAW_MATERIAL", nullable = false)

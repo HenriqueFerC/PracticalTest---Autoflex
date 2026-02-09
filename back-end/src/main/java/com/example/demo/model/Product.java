@@ -21,7 +21,7 @@ public class Product {
     @Setter(AccessLevel.NONE)
     private Integer id;
 
-    @Column(name = "NAME_PRODUCT", nullable = false, length = 30)
+    @Column(name = "NAME_PRODUCT", nullable = false, length = 30, unique = true)
     private String name;
 
     @Column(name = "VALUE_PRODUCT", nullable = false)

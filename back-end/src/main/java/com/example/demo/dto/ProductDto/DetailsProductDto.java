@@ -4,8 +4,8 @@ import com.example.demo.model.Product;
 
 import java.math.BigDecimal;
 
-public record DetailsProductDto(String name, BigDecimal value) {
+public record DetailsProductDto(Integer id, String name, BigDecimal value) {
     public DetailsProductDto(Product product) {
-        this(product.getName(), product.getValue());
+        this(product.getId(), product.getName(), product.getValue());
     }
 }

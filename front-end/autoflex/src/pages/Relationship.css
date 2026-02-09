@@ -1,0 +1,87 @@
+.relationship-container {
+    max-width: 600px;
+}
+
+.relationship-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.relationship-header-icon {
+    background: var(--color-primary);
+    padding: 0.5rem;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.relationship-header-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.relationship-description {
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+}
+
+.relationship-alert {
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    margin-bottom: 1rem;
+}
+
+.relationship-alert-error {
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--color-danger);
+    color: var(--color-danger);
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.relationship-alert-success {
+    background-color: rgba(16, 185, 129, 0.1);
+    border: 1px solid var(--color-secondary);
+    color: var(--color-secondary);
+    text-align: center;
+}
+
+.relationship-success-icon {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.relationship-success-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.relationship-loading {
+    text-align: center;
+    padding: 1rem 0;
+    color: var(--color-text-muted);
+}
+
+.relationship-form-row {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+}
+
+@media (min-width: 640px) {
+    .relationship-form-row {
+        flex-direction: row;
+    }
+}
+
+.relationship-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}

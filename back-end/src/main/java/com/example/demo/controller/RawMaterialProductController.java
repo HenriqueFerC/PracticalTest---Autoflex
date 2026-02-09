@@ -23,12 +23,13 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("rawMaterialProduct")
 @Tag(name = "Raw Material - Product Controller", description = "API of Raw Material and Product, should register which raw material" +
         "is necessary for which product and then necessary quantity, should too list all raw material necessary to which product and list" +
         "products available for which raw material.")
 public class RawMaterialProductController {
-
+    
     private final RawMaterialProductService rawMaterialProductService;
 
     public RawMaterialProductController(RawMaterialProductService rawMaterialProductService) {
